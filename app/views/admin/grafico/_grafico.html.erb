@@ -1,0 +1,88 @@
+<h3> Grafico de Cuentas Contables</h3>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bar char</title>
+
+        <script
+         src="https://code.jquery.com/jquery-3.1.1.min.js"
+         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+         crossorigin="anonymous"></script>
+         <script src="https://code.highcharts.com/highcharts.js"></script>
+
+
+            <% @vanc=400 %>
+
+
+         <div id="container" style="min-width: 310px; max-width: 900px; height:<%= @vanc%>px; margin: 0 auto"></div>
+
+
+    </head>
+
+    <body>
+
+        <script>
+        $(function () {
+
+          var myChart = Highcharts.chart('container', {
+                chart: {
+        type: 'bar'
+    },
+    title: {
+        text: '<%= param20 %>'
+    },
+    xAxis: [{
+        categories:<% nn=param1.length %>
+<% conta=0 %>
+ [
+<%while nn>conta do%>
+
+<%if conta==0 then%>
+   "<%=param1[0] %>"
+<% else %>
+,"<%=param1[conta] %>"
+<% end %>
+<%conta=conta+1 %>
+<% end %>
+]
+    }
+  ],
+    yAxis: {
+        min: 2,
+        title: {
+            text: 'Importes en millones de soles al 31 de diciembre del 2018',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    legend: {
+        reversed: true
+    },
+    tooltip: {
+          valueSuffix: ' dias'
+      },
+    plotOptions: {
+        series: {
+            stacking: 'true'
+        }
+    },
+    series: [
+      {
+
+        name: 'IMPORTES EN MONEDA NACIONAL',
+        color: 'rgba(0,255,0,0.9)',
+        data:  <%= param2%>
+       }
+  ]
+})
+});
+
+
+        </script>
+
+    <div id="container"></div>
+    </body>
+</html>
