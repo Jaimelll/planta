@@ -83,7 +83,7 @@ ActiveAdmin.register Formula do
                 row :seccion
                 row :acti
                 row :obs
-                row :pedido
+             #   row :pedido
                 row "Modificado por" do |prod|
                   AdminUser.where(id:prod.admin_user_id).
                   select('email as dd').first.dd
