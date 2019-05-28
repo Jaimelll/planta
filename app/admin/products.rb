@@ -59,6 +59,12 @@ ActiveAdmin.register Product do
 
             f.input :unidad,:label => 'Unidad de medida', :as => :select, :collection =>
             Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
+            f.input :activo,:label => 'Activo', :as => :select, :collection =>
+            Detail.where(element_id:2).map{|u| [u.descripcion, u.id]}
+            f.input :seccion,:label => 'Seccion', :as => :select, :collection =>
+            Detail.where(element_id:3).map{|u| [u.descripcion, u.id]}
+            f.input :familia,:label => 'Familia', :as => :select, :collection =>
+            Detail.where(element_id:4).map{|u| [u.descripcion, u.id]}
 
             f.input :orden
             f.input :admin_user_id, :input_html => 
@@ -85,6 +91,7 @@ ActiveAdmin.register Product do
                 row :nombre
                 row :descripcion
                 row :unidad
+                
                 row :orden
                 row "Modificado por" do |prod|
                   AdminUser.where(id:prod.admin_user_id).
