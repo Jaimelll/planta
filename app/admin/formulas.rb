@@ -15,15 +15,32 @@ ActiveAdmin.register Formula do
     
     
     index :title => "Formulación"  do
+      def paraele(vid,vord)
+        if Detail.where(element_id:vid, id:vord).count>0 then
+  
+           exp =Detail.where(element_id:vid, id:vord).
+              select('descripcion as dd').first.dd
+  
+        else
+             exp =   "s/d"
+        end
+  
+      end
 
             column("Material")do |mat|
                Product.where(id:mat.product_id).select('nombre as dd').first.dd
             end  
             column("codigo")
-           
+            column("pedido") do |producto|
+              if Product.where(id:producto.pedido).count>0 then
+                Product.where(id:producto.pedido).select('descripcion as dd').first.dd
+              end
+            end               
             column("cantidad")
             column("factor")
-            column("unidad")
+            column("unidad") do |mat|
+              paraele(1,mat.unidad)
+            end  
             column("seccion")
             column("pedido")
             column("obs")
@@ -43,15 +60,16 @@ ActiveAdmin.register Formula do
                   f.inputs "#{nn}" do
                   f.input :product_id, :label => 'Producto' ,
                            :input_html => { :value => params[:product_id]}, :as => :hidden
-                  
+                  f.input :pedido, :label => 'Material', :as => :select, :collection =>
+                           Product.order('descripcion').map{|u| [u.descripcion, u.id]}
                   f.input :codigo, :input_html => { :style =>  'width:30%'}
                   f.input :cantidad, :input_html => { :style =>  'width:30%'}
                   f.input :factor, :input_html => { :style =>  'width:30%'}
-                  f.input :unidad, :input_html => { :style =>  'width:30%'}
+                  f.input :unidad,:label => 'Unidad de medida', :as => :select, :collection =>
+                             Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
                   f.input :seccion, :input_html => { :style =>  'width:30%'}
                   f.input :obs, :input_html => { :style =>  'width:30%'}
-                  f.input :pedido, :input_html => { :style =>  'width:30%'}
-
+                  
                  
                   
                   f.input :admin_user_id, :input_html => 
@@ -63,7 +81,17 @@ ActiveAdmin.register Formula do
     
     
             show :title => ' Producto'  do
-    
+              def paraele(vid,vord)
+                if Detail.where(element_id:vid, id:vord).count>0 then
+          
+                   exp =Detail.where(element_id:vid, id:vord).
+                      select('descripcion as dd').first.dd
+          
+                else
+                     exp =   "s/d"
+                end
+          
+              end    
     
               attributes_table do
     
@@ -77,9 +105,16 @@ ActiveAdmin.register Formula do
                   link_to "#{nn}", admin_product_formulas_path(mat.product_id)
                 end 
                 row :codigo
+                row :pedido do |producto|
+                  if Product.where(id:producto.pedido).count >0 then
+                    Product.where(id:producto.pedido).select('descripcion as dd').first.dd
+                  end
+                end                
                 row :cantidad
                 row :factor
-                row :unidad
+                row :unidad do |producto|
+                  paraele(1,producto.unidad)
+                end
                 row :seccion
                 row :acti
                 row :obs
