@@ -65,13 +65,13 @@ ActiveAdmin.register Product do
         paraele(1,producto.unidad)
       end  
       column("activo") do |producto|
-        paraele(2,producto.unidad)
+        paraele(2,producto.activo)
       end  
       column("seccion") do |producto|
-        paraele(3,producto.unidad)
+        paraele(3,producto.seccion)
       end  
       column("familia") do |producto|
-        paraele(4,producto.unidad)
+        paraele(4,producto.familia)
       end  
 
       column("orden")
@@ -138,13 +138,13 @@ ActiveAdmin.register Product do
                   paraele(1,producto.unidad)
                 end
                 row :activo do |producto|
-                  paraele(2,producto.unidad)
+                  paraele(2,producto.activo)
                 end
                 row :seccion do |producto|
-                  paraele(3,producto.unidad)
+                  paraele(3,producto.seccion)
                 end
                 row :familia do |producto|
-                  paraele(4,producto.unidad)
+                  paraele(4,producto.familia)
                 end                                                
                 row :orden
                 row "Modificado por" do |prod|
