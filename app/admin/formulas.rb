@@ -62,7 +62,7 @@ ActiveAdmin.register Formula do
     
     
     
-    show do
+            show :title => ' Producto'  do
     
     
               attributes_table do
@@ -100,7 +100,7 @@ ActiveAdmin.register Formula do
 
           
            
-              li link_to "#{nn}",  admin_product_formulas_path(params[:product_id])
+              li link_to "#{nn}",  admin_product_path(params[:product_id])
          
            
           

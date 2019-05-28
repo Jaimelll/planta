@@ -23,7 +23,7 @@ filter :fac1
 index :title => 'Lista de Parametros' do
 
 column("nombre") do |elem|
-link_to "#{elem.nombre} ", admin_element_details_path(element)
+link_to "#{elem.nombre} ", admin_element_details_path(elem)
 end
 column("descripcion") 
 column("orden1")     

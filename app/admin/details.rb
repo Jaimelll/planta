@@ -92,7 +92,7 @@ ActiveAdmin.register Detail do
 
           
            
-              li link_to "#{nn}",  admin_element_details_path(params[:element_id])
+              li link_to "#{nn}",  admin_element_path(params[:element_id])
          
            
           

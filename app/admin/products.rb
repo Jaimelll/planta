@@ -55,7 +55,11 @@ ActiveAdmin.register Product do
             f.input :codigo
             f.input :nombre
             f.input :descripcion
-            f.input :unidad
+            
+
+            f.input :unidad,:label => 'Unidad de medida', :as => :select, :collection =>
+            Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
+
             f.input :orden
             f.input :admin_user_id, :input_html => 
                     { :value => current_admin_user.id }, :as => :hidden
