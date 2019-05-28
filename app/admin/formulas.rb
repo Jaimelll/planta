@@ -27,11 +27,11 @@ ActiveAdmin.register Formula do
   
       end
 
-            column("Material")do |mat|
+            column("Producto")do |mat|
                Product.where(id:mat.product_id).select('nombre as dd').first.dd
             end  
             column("codigo")
-            column("pedido") do |producto|
+            column("Material") do |producto|
               if Product.where(id:producto.pedido).count>0 then
                 Product.where(id:producto.pedido).select('descripcion as dd').first.dd
               end
@@ -101,11 +101,11 @@ ActiveAdmin.register Formula do
                
 
               
-                row "Material" do |mat|
+                row "Producto" do |mat|
                   link_to "#{nn}", admin_product_formulas_path(mat.product_id)
                 end 
                 row :codigo
-                row :pedido do |producto|
+                row "Material" do |producto|
                   if Product.where(id:producto.pedido).count >0 then
                     Product.where(id:producto.pedido).select('descripcion as dd').first.dd
                   end
