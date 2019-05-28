@@ -74,7 +74,7 @@ ActiveAdmin.register Formula do
 
               
                 row "Material" do |mat|
-                  link_to "#{nn}", admin_product_formulas_path(formula.product_id)
+                  link_to "#{nn}", admin_product_formulas_path(mat.product_id)
                 end 
                 row :codigo
                 row :cantidad

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_15_205424) do
+ActiveRecord::Schema.define(version: 2019_05_28_154827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,32 @@ ActiveRecord::Schema.define(version: 2019_04_15_205424) do
     t.integer "categoria", default: 3, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "details", force: :cascade do |t|
+    t.string "codigo"
+    t.string "descripcion"
+    t.float "cantidad"
+    t.integer "orden1"
+    t.integer "orden2"
+    t.bigint "element_id"
+    t.bigint "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_details_on_admin_user_id"
+    t.index ["element_id"], name: "index_details_on_element_id"
+  end
+
+  create_table "elements", force: :cascade do |t|
+    t.string "nombre"
+    t.string "descripcion"
+    t.integer "orden1"
+    t.integer "orden2"
+    t.integer "fac1"
+    t.bigint "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_elements_on_admin_user_id"
   end
 
   create_table "formulas", force: :cascade do |t|
@@ -87,6 +113,9 @@ ActiveRecord::Schema.define(version: 2019_04_15_205424) do
     t.index ["admin_user_id"], name: "index_products_on_admin_user_id"
   end
 
+  add_foreign_key "details", "admin_users"
+  add_foreign_key "details", "elements"
+  add_foreign_key "elements", "admin_users"
   add_foreign_key "formulas", "admin_users"
   add_foreign_key "formulas", "products"
   add_foreign_key "products", "admin_users"
