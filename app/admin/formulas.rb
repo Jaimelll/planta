@@ -32,8 +32,8 @@ ActiveAdmin.register Formula do
             end  
             column("codigo")
             column("Material") do |producto|
-              if Product.where(id:producto.pedido).count>0 then
-                Product.where(id:producto.pedido).select('descripcion as dd').first.dd
+              if Product.where(id:producto.for1).count>0 then
+                Product.where(id:producto.for1).select('nombre as dd').first.dd
               end
             end               
             column("cantidad")
@@ -60,8 +60,10 @@ ActiveAdmin.register Formula do
                   f.inputs "#{nn}" do
                   f.input :product_id, :label => 'Producto' ,
                            :input_html => { :value => params[:product_id]}, :as => :hidden
-                  f.input :pedido, :label => 'Material', :as => :select, :collection =>
-                           Product.order('descripcion').map{|u| [u.descripcion, u.id]}
+                  f.input :for1, :label => 'Material', :as => :select, :collection =>
+                           Product.order('nombre').map{|u| [u.nombre, u.id]}
+
+
                   f.input :codigo, :input_html => { :style =>  'width:30%'}
                   f.input :cantidad, :input_html => { :style =>  'width:30%'}
                   f.input :factor, :input_html => { :style =>  'width:30%'}
@@ -106,8 +108,8 @@ ActiveAdmin.register Formula do
                 end 
                 row :codigo
                 row "Material" do |producto|
-                  if Product.where(id:producto.pedido).count >0 then
-                    Product.where(id:producto.pedido).select('descripcion as dd').first.dd
+                  if Product.where(id:producto.for1).count >0 then
+                    Product.where(id:producto.for1).select('nombre as dd').first.dd
                   end
                 end                
                 row :cantidad
