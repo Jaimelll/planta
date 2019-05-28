@@ -26,21 +26,54 @@ ActiveAdmin.register Product do
       belongs_to :product
     end
     
- 
-    
+
+
     filter :codigo
     filter :nombre
     filter :descripcion
     
     
-       index :title => 'Lista de Productos' do
+
+
+
+
+
+
+
+   index :title => 'Lista de Productos' do
+
+    def paraele(vid,vord)
+      if Detail.where(element_id:vid, id:vord).count>0 then
+
+         exp =Detail.where(element_id:vid, id:vord).
+            select('descripcion as dd').first.dd
+
+      else
+           exp =   "s/d"
+      end
+
+    end
+
+
       column("nombre") do |producto|
           link_to "#{producto.nombre} ", admin_product_formulas_path(producto)
       end
       column("codigo") 
-      column("nombre")     
+      
       column("descripcion")
-      column("unidad")
+      column("unidad") do |producto|
+        paraele(1,producto.unidad)
+      end  
+      column("activo") do |producto|
+        paraele(2,producto.unidad)
+      end  
+      column("seccion") do |producto|
+        paraele(3,producto.unidad)
+      end  
+      column("familia") do |producto|
+        paraele(4,producto.unidad)
+      end  
+
       column("orden")
     
     
@@ -80,7 +113,17 @@ ActiveAdmin.register Product do
     
     
     show do
-    
+      def paraele(vid,vord)
+        if Detail.where(element_id:vid, id:vord).count>0 then
+  
+           exp =Detail.where(element_id:vid, id:vord).
+              select('descripcion as dd').first.dd
+  
+        else
+             exp =   "s/d"
+        end
+  
+      end
     
               attributes_table do
     
@@ -90,8 +133,19 @@ ActiveAdmin.register Product do
                 row :codigo
                 row :nombre
                 row :descripcion
-                row :unidad
-                
+               
+                row :unidad do |producto|
+                  paraele(1,producto.unidad)
+                end
+                row :activo do |producto|
+                  paraele(2,producto.unidad)
+                end
+                row :seccion do |producto|
+                  paraele(3,producto.unidad)
+                end
+                row :familia do |producto|
+                  paraele(4,producto.unidad)
+                end                                                
                 row :orden
                 row "Modificado por" do |prod|
                   AdminUser.where(id:prod.admin_user_id).
