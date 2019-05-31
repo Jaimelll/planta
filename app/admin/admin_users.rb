@@ -1,14 +1,12 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation, :categoria, :periodo
+  permit_params :email, :password, :password_confirmation, :categoria, :periodo,
+                   :reset_password_token, :reset_password_sent_at,
+                   :created_at, :updated_at
 
   
   
 
 menu  priority: 17,label: "Usuarios"
-
-
-
-
 
 
 
