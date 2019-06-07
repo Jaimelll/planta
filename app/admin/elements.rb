@@ -3,7 +3,8 @@ ActiveAdmin.register Element do
 
 
     permit_params :nombre, :descripcion, :orden1, :orden2,
-    :fac1,  :admin_user_id
+    :fac1,  :admin_user_id,
+    details_attributes: [:id, :codigo, :descripcion, :orden1, :orden2, :_destroy]
 
 menu  priority: 5, label: "Parametros"
 
@@ -51,7 +52,17 @@ f.input :admin_user_id, :input_html =>
       { :value => current_admin_user.id }, :as => :hidden
 
 end
-
+f.inputs do
+  f.has_many :details, heading: 'Detalles',
+                          allow_destroy: true,
+                          new_record: true do |a|
+   
+    a.input :codigo, :input_html => { :style =>  'width:30%'}
+    a.input :descripcion, :input_html => { :style =>  'width:30%'}
+    a.input :orden1, :input_html => { :style =>  'width:30%'}
+    a.input :orden2, :input_html => { :style =>  'width:30%'}
+  end
+end
 
 
 f.actions
@@ -73,10 +84,21 @@ attributes_table do
   row :orden1
   row :orden2
   row :fac1
+
   row "Modificado por" do |prod|
     AdminUser.where(id:prod.admin_user_id).
     select('email as dd').first.dd
   end 
+  panel "Table of Contents" do
+    table_for element.details do
+      column :descripcion
+      column :orden1
+      column :orden2
+    end
+  end
+
+
+
 end
 
 end
