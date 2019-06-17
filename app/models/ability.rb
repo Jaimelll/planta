@@ -13,8 +13,10 @@ class Ability
             when 3 #adm por defecto
               can :manage, :all
             when 1 #adm por defecto
+              can [:read,:update],  [AdminUser]
               can :read, ActiveAdmin::Page, :name =>"Dashboard"   
-              can [:create,:read,:update], [Product,Formula,Element,Detail]  
+              can [:create,:read,:update,:destroy], [Product,Formula,Element,Detail]  
+             
             
             else
               can [:read], [Product,Formula]          
