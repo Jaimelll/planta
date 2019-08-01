@@ -1,0 +1,21 @@
+wb = xlsx_package.workbook
+
+
+
+wb.add_worksheet(name: "prueba") do |sheet|
+
+
+
+sheet.add_row []
+ 
+
+sheet.add_row []
+
+
+
+sheet.add_row %w(PAC OBAC DESCRIPCION MODALIDAD EXPEDIENTE OBAC PUBLIC NO_ADM DC ADMIT DPC FC)
+
+
+end    
+
+
