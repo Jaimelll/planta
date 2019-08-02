@@ -13,8 +13,22 @@ sheet.add_row []
 
 
 
-sheet.add_row %w(PAC OBAC DESCRIPCION MODALIDAD EXPEDIENTE OBAC PUBLIC NO_ADM DC ADMIT DPC FC)
 
+
+sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "PIEZA", "PIEZA KG"]
+        
+Movement.order(:id).each do |mov|
+
+vmat=Product.where(id:mov.intm01).select('nombre as dd').first.dd
+vfec1=Header.where(id:mov.header_id).select('fecha1 as dd').first.dd
+vop=Header.where(id:mov.header_id).select('strih01 as dd').first.dd
+vdet=Header.where(id:mov.header_id).select('strih02 as dd').first.dd
+
+
+sheet.add_row [vfec1,vop,vdet,vmat,mov.floam01,mov.floam02]
+
+end       
+sheet.column_widths *[10, 10, 10, 10, 10,10]
 
 end    
 

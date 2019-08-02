@@ -5,6 +5,6 @@ ActiveAdmin.register_page "Dashboard" do
     content title: "MODULOS" do
     li link_to "Productos",  admin_products_path
     li link_to "Parámetros ",  admin_elements_path
-    li link_to "Prueba",reports_vhoja01_path(format:  "xlsx") 
+    li link_to "Pedido",reports_vhoja01_path(format:  "xlsx") 
     end
 end
