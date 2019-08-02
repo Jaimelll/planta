@@ -9,8 +9,7 @@ ActiveAdmin.register Movement do
                 :header_id, :admin_user_id
 
 
-  
- 
+   filter :floam02, label:'Pedido Kg'
   
   
   index :title => "Movimiento"  do
@@ -81,5 +80,20 @@ ActiveAdmin.register Movement do
   
         end
   
+        sidebar  " Pedido ",:only => [:show, :index]  do
+          if params[:id] then
+             vpara=params[:id]
+          else
+            vpara=params[:header_id]
+          end
+          link_to "Pedido", admin_header_path(vpara)
+         
+        end  
+
+
+
+
+
+
       
 end
