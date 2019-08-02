@@ -2,7 +2,10 @@ ActiveAdmin.register Header do
 
  
 
-permit_params :fecha1,  :admin_user_id
+permit_params :fecha1,  :admin_user_id,
+ :dateh01,:dateh02,:dateh03,
+ :inth01, :inth02, :inth03, :inth04, :inth05, :inth06, :inth07, :inth08, 
+ :strih01, :strih02, :strih03, :strih04
 
 menu  priority: 6, label: "Encabezado"
 
