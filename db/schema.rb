@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_154827) do
+ActiveRecord::Schema.define(version: 2019_08_01_142625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,29 @@ ActiveRecord::Schema.define(version: 2019_05_28_154827) do
     t.index ["product_id"], name: "index_formulas_on_product_id"
   end
 
+  create_table "headers", force: :cascade do |t|
+    t.date "fecha1"
+    t.date "dateh01"
+    t.date "dateh02"
+    t.date "dateh03"
+    t.integer "inth01"
+    t.integer "inth02"
+    t.integer "inth03"
+    t.integer "inth04"
+    t.integer "inth05"
+    t.integer "inth06"
+    t.integer "inth07"
+    t.integer "inth08"
+    t.string "strih01"
+    t.string "strih02"
+    t.string "strih03"
+    t.string "strih04"
+    t.bigint "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_headers_on_admin_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "codigo"
     t.string "nombre"
@@ -118,5 +141,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_154827) do
   add_foreign_key "elements", "admin_users"
   add_foreign_key "formulas", "admin_users"
   add_foreign_key "formulas", "products"
+  add_foreign_key "headers", "admin_users"
   add_foreign_key "products", "admin_users"
 end

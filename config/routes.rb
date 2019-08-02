@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
  
   
+  resources :headers
   resources :details
   resources :elements
   resources :products
