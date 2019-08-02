@@ -15,7 +15,9 @@ class Ability
             when 1 #adm por defecto
               can [:read,:update],  [AdminUser]
               can :read, ActiveAdmin::Page, :name =>"Dashboard"   
+              can :read, ActiveAdmin::Page, :name =>"Pedido"   
               can [:create,:read,:update,:destroy], [Product,Formula,Element,Detail]  
+              can [:create,:read,:update,:destroy], [Header,Movement]  
              
             
             else
