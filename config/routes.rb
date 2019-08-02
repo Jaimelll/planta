@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
  
   
+  resources :movements
   resources :headers
   resources :details
   resources :elements

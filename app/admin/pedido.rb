@@ -15,10 +15,11 @@
  
         column("Fecha", :sortable => :fecha1) do |pedid|
           if pedid.fecha1 then
-            pedid.fecha1.strftime("%d-%m-%Y")
+           vfec=pedid.fecha1.strftime("%d-%m-%Y")
           else
-            "s/d"
+            vfec="s/d"
           end
+          link_to vfec, admin_header_movements_path(pedid)
         end
         column("O/P", :sortable => :strih01) do |pedid|
           pedid.strih01

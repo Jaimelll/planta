@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_142625) do
+ActiveRecord::Schema.define(version: 2019_08_02_151337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,27 @@ ActiveRecord::Schema.define(version: 2019_08_01_142625) do
     t.index ["admin_user_id"], name: "index_headers_on_admin_user_id"
   end
 
+  create_table "movements", force: :cascade do |t|
+    t.bigint "header_id"
+    t.integer "intm01"
+    t.integer "intm02"
+    t.integer "intm03"
+    t.integer "intm04"
+    t.string "strim01"
+    t.string "strim02"
+    t.string "strim03"
+    t.string "strim04"
+    t.float "floam01"
+    t.float "floam02"
+    t.float "floam03"
+    t.float "floam04"
+    t.bigint "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_movements_on_admin_user_id"
+    t.index ["header_id"], name: "index_movements_on_header_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "codigo"
     t.string "nombre"
@@ -142,5 +163,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_142625) do
   add_foreign_key "formulas", "admin_users"
   add_foreign_key "formulas", "products"
   add_foreign_key "headers", "admin_users"
+  add_foreign_key "movements", "admin_users"
+  add_foreign_key "movements", "headers"
   add_foreign_key "products", "admin_users"
 end

@@ -9,6 +9,9 @@ permit_params :fecha1,  :admin_user_id,
 
 menu  priority: 6, label: "Encabezado"
 
+ActiveAdmin.register Movement do
+  belongs_to :header
+end
 
 filter :fecha1
 
