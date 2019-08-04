@@ -56,7 +56,8 @@ end
 
 ############################
 
-
+case @vopc.to_i
+  when 1
 
 
 wb.add_worksheet(name: "Pedido") do |sheet|
@@ -104,4 +105,54 @@ sheet.column_widths *[10, 10, 10, 40, 10,10]
 
 end    
 
+when 2
+
+
+wb.add_worksheet(name: "Pedido") do |sheet|
+
+
+
+sheet.add_row []
+ 
+
+sheet.add_row []
+
+
+
+
+
+sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "UNIDADaaa", "CANTIDAD"],
+style: [titu, titu, titu, titu, titu, titu]
+
+Movement.order(:id).each do |mov|
+
+              detnomb = DetailsController.new
+              prodnomb = ProductsController.new
+
+
+# vfec1=Header.where(id:mov.header_id).select('fecha1 as dd').first.dd
+# vop=Header.where(id:mov.header_id).select('strih01 as dd').first.dd
+# vdet=Header.where(id:mov.header_id).select('strih02 as dd').first.dd
+
+
+
+
+Header.where(id:mov.header_id).each do |enca| 
+
+sheet.add_row [enca.fecha1,enca.strih01,enca.strih02,prodnomb.nomprod(mov.intm01),
+                detnomb.paraele(1,mov.intm02),mov.floam02],
+style: [fechad, centra, desc, desc, desc, soles]
+
+end
+
+
+
+
+end       
+sheet.column_widths *[10, 10, 10, 40, 10,10]
+
+end    
+
+
+end # fin de case opc
 end #style

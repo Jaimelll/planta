@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 root 'admin/dashboard#index'
 
 match 'reports/vhoja01', via: [:get]
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
