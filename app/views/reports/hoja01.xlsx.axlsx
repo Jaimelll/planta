@@ -1,8 +1,65 @@
 wb = xlsx_package.workbook
 
+wb.styles do |style|
+
+titu = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                                 alignment: { horizontal: :center,vertical: :center, wrap_text: :true },
+                                b: true, sz: 8, bg_color: "C1C1C1")
+
+soles = style.add_style(border: Axlsx::STYLE_THIN_BORDER,
+                           alignment: { horizontal: :center ,vertical: :center},num_fmt: 3)
 
 
-wb.add_worksheet(name: "prueba") do |sheet|
+
+
+fechas = style.add_style(format_code: "mm-yyyy", border: Axlsx::STYLE_THIN_BORDER,
+                        alignment: { horizontal: :center,vertical: :center })
+fechad = style.add_style(format_code: "dd/mm/yy", border: Axlsx::STYLE_THIN_BORDER,
+                                alignment: { horizontal: :center,vertical: :center })                        
+
+
+
+centra = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                               alignment: { horizontal: :center,vertical: :center })
+
+
+
+
+izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                                alignment: { horizontal: :left ,vertical: :center, wrap_text: :true})
+
+
+
+desc = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                              alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 9)
+
+
+
+ddmm = style.add_style(format_code: "dd-mm", border: Axlsx::STYLE_THIN_BORDER,
+                            alignment: { horizontal: :center,vertical: :center })
+
+
+normal = style.add_style( alignment: { horizontal: :center,vertical: :center })
+
+
+############################ merge
+def merge_last_row(sheet,options ={})
+  last_row = sheet.rows.last.index + 1
+  first_col,last_col = options[:columns]
+  if first_col && last_col
+    sheet.merge_cells "#{first_col}#{last_row}:#{last_col}#{last_row}"
+  else
+    sheet.merge_cells sheet.rows.last
+  end
+  sheet.rows.last.style = style if options[:style]
+end
+
+############################
+
+
+
+
+wb.add_worksheet(name: "Pedido") do |sheet|
 
 
 
@@ -15,21 +72,36 @@ sheet.add_row []
 
 
 
-sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "PIEZA", "PIEZA KG"]
-        
+sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "UNIDAD", "CANTIDAD"],
+style: [titu, titu, titu, titu, titu, titu]
+
 Movement.order(:id).each do |mov|
 
-vmat=Product.where(id:mov.intm01).select('nombre as dd').first.dd
-vfec1=Header.where(id:mov.header_id).select('fecha1 as dd').first.dd
-vop=Header.where(id:mov.header_id).select('strih01 as dd').first.dd
-vdet=Header.where(id:mov.header_id).select('strih02 as dd').first.dd
+              detnomb = DetailsController.new
+              prodnomb = ProductsController.new
 
 
-sheet.add_row [vfec1,vop,vdet,vmat,mov.floam01,mov.floam02]
+# vfec1=Header.where(id:mov.header_id).select('fecha1 as dd').first.dd
+# vop=Header.where(id:mov.header_id).select('strih01 as dd').first.dd
+# vdet=Header.where(id:mov.header_id).select('strih02 as dd').first.dd
+
+
+
+
+Header.where(id:mov.header_id).each do |enca| 
+
+sheet.add_row [enca.fecha1,enca.strih01,enca.strih02,prodnomb.nomprod(mov.intm01),
+                detnomb.paraele(1,mov.intm02),mov.floam02],
+style: [fechad, centra, desc, desc, desc, soles]
+
+end
+
+
+
 
 end       
-sheet.column_widths *[10, 20, 20, 40, 10,10]
+sheet.column_widths *[10, 10, 10, 40, 10,10]
 
 end    
 
-
+end #style
