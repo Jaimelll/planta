@@ -13,4 +13,5 @@ class DetailsController < InheritedResources::Base
   end
 
 
+
 end

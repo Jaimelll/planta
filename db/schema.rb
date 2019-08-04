@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_02_151337) do
+ActiveRecord::Schema.define(version: 2019_08_04_202614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,18 @@ ActiveRecord::Schema.define(version: 2019_08_02_151337) do
     t.bigint "admin_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "intm05"
+    t.integer "intm06"
+    t.integer "intm07"
+    t.integer "intm08"
+    t.integer "intm09"
+    t.integer "intm10"
+    t.float "floam05"
+    t.float "floam06"
+    t.float "floam07"
+    t.float "floam08"
+    t.float "floam09"
+    t.float "floam10"
     t.index ["admin_user_id"], name: "index_movements_on_admin_user_id"
     t.index ["header_id"], name: "index_movements_on_header_id"
   end

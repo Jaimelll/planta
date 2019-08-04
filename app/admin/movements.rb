@@ -4,8 +4,10 @@ ActiveAdmin.register Movement do
     
 
   permit_params :intm01, :intm02, :intm03, :intm04, 
+                :intm05, :intm06, :intm07, :intm08,:intm09, :intm10,
                 :strim01, :strim02, :strim03, :strim04, 
                 :floam01, :floam02, :floam03, :floam04, 
+                :floam05, :floam06, :floam07, :floam08, :floam09, :floam10,
                 :header_id, :admin_user_id
 
 
@@ -73,6 +75,11 @@ ActiveAdmin.register Movement do
                          Detail.where(element_id:6).map{|u| [u.descripcion, u.id]}
 
                 f.input :floam04, :label => 'Peso(kg)', :input_html => { :style =>  'width:30%'}
+
+                f.input :intm05, :label => 'Salidas', :input_html => { :style =>  'width:30%'}             
+                f.input :intm06, :label => 'Piezas x prensada', :input_html => { :style =>  'width:30%'}
+                f.input :floam05, :label => 'Culote', :input_html => { :style =>  'width:30%'}
+                f.input :floam06, :label => 'Puntas', :input_html => { :style =>  'width:30%'}
                 
                 f.input :admin_user_id, :input_html => 
                          { :value => current_admin_user.id }, :as => :hidden
@@ -112,6 +119,19 @@ ActiveAdmin.register Movement do
               end 
               row "Peso(kg)" do |movim|
                 movim.floam04
+              end 
+
+              row "Salidas" do |movim|
+                movim.intm05
+              end 
+              row "Piezas x prensada" do |movim|
+                movim.intm06
+              end 
+              row "Culote" do |movim|
+                movim.floam05
+              end 
+              row "Puntas" do |movim|
+                movim.floam06
               end 
 
               row "Modificado por" do |movim|

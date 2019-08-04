@@ -110,19 +110,29 @@ when 2
 
 wb.add_worksheet(name: "Pedido") do |sheet|
 
+if Detail.where(element_id:7, orden2:1).count>0 then
+   exp =Detail.where(element_id:7, orden2:1).select('cantidad as dd').first.dd
+else
+   exp=0
+end
 
 
 sheet.add_row []
  
 
+sheet.add_row ["Diámetro de lingote = ",exp],
+style: [ centra, centra]
+
+
 sheet.add_row []
 
+ 
 
 
 
-
-sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "UNIDAD", "CANTIDAD"],
-style: [titu, titu, titu, titu, titu, titu]
+sheet.add_row [ "MATERIAL", "UNIDAD", "CANTIDAD", "PERFIL", "ALEACION",
+              "PESO (KG)", "SALIDAS", "PZASxPRENSADA", "CULOTE", "PUNTAS"],
+style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu]
 
 Movement.order(:id).each do |mov|
 
@@ -130,18 +140,16 @@ Movement.order(:id).each do |mov|
               prodnomb = ProductsController.new
 
 
-# vfec1=Header.where(id:mov.header_id).select('fecha1 as dd').first.dd
-# vop=Header.where(id:mov.header_id).select('strih01 as dd').first.dd
-# vdet=Header.where(id:mov.header_id).select('strih02 as dd').first.dd
 
 
 
 
 Header.where(id:mov.header_id).each do |enca| 
 
-sheet.add_row [enca.fecha1,enca.strih01,enca.strih02,prodnomb.nomprod(mov.intm01),
-                detnomb.paraele(1,mov.intm02),mov.floam02],
-style: [fechad, centra, desc, desc, desc, soles]
+sheet.add_row [prodnomb.nomprod(mov.intm01), detnomb.paraele(1,mov.intm02),mov.floam02,
+               detnomb.paraele(5,mov.intm03),detnomb.paraele(6,mov.intm04),
+                mov.floam04, mov.intm05,mov.intm06, mov.floam05,mov.floam06],
+style: [ desc, desc, soles,desc, desc,centra,centra,centra,centra,centra]
 
 end
 
@@ -149,7 +157,7 @@ end
 
 
 end       
-sheet.column_widths *[10, 10, 10, 40, 10,10]
+sheet.column_widths *[ 30, 10,10,20,20,10,10,15,0,10,10]
 
 end    
 
