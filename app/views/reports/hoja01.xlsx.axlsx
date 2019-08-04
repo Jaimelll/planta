@@ -121,7 +121,7 @@ sheet.add_row []
 
 
 
-sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "UNIDADaaa", "CANTIDAD"],
+sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "UNIDAD", "CANTIDAD"],
 style: [titu, titu, titu, titu, titu, titu]
 
 Movement.order(:id).each do |mov|

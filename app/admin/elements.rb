@@ -6,7 +6,7 @@ ActiveAdmin.register Element do
     :fac1,  :admin_user_id,
     details_attributes: [:id, :codigo, :descripcion, :orden1, :orden2, :_destroy]
 
-menu  priority: 5, label: "Parametros"
+menu  priority: 15, label: "Parametros"
 
 ActiveAdmin.register Detail do
 belongs_to :element

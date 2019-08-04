@@ -24,6 +24,7 @@ ActiveAdmin.register Detail do
             column("descripcion")
             column("orden1")
             column("orden2")
+            column("cantidad")
      
               actions
           end
@@ -46,6 +47,7 @@ ActiveAdmin.register Detail do
                   f.input :descripcion, :input_html => { :style =>  'width:30%'}
                   f.input :orden1, :input_html => { :style =>  'width:30%'}
                   f.input :orden2, :input_html => { :style =>  'width:30%'}
+                  f.input :cantidad, :input_html => { :style =>  'width:30%'}
 
 
                  
@@ -75,6 +77,7 @@ ActiveAdmin.register Detail do
                 row :descripcion
                 row :orden1
                 row :orden2
+                row :cantidad
 
                 row "Modificado por" do |prod|
                   AdminUser.where(id:prod.admin_user_id).

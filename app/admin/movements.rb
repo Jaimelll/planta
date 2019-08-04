@@ -9,7 +9,7 @@ ActiveAdmin.register Movement do
                 :header_id, :admin_user_id
 
 
-   filter :floam02, label:'Pedido Kg'
+   filter :floam02, label:'Cantidad'
   
   
   index :title => "Movimiento"  do
@@ -25,9 +25,19 @@ ActiveAdmin.register Movement do
           column("Unidad") do |movim|
              detnomb.paraele(1,movim.intm02)
           end  
-          column("Pedido Kg")do |movim|
+          column("Cantidad")do |movim|
              movim.floam02
           end  
+          column("Perfil") do |movim|
+            detnomb.paraele(5,movim.intm03)
+          end  
+          column("Aleacion")do |movim|
+            detnomb.paraele(6,movim.intm04)          
+          end 
+          column("Peso(kg)")do |movim|
+            movim.floam04
+          end 
+
 
             actions
         end
@@ -53,8 +63,16 @@ ActiveAdmin.register Movement do
 
                 f.input :intm02,:label => 'Unidad de medida', :as => :select, :collection =>
                          Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
-                f.input :floam02, :label => 'Pedido', :input_html => { :style =>  'width:30%'}
-               
+                         
+                f.input :floam02, :label => 'Cantidad', :input_html => { :style =>  'width:30%'}
+
+                f.input :floam03, :label => 'Longitud', :input_html => { :style =>  'width:30%'}
+                f.input :intm03, :label => 'Perfil', :as => :select, :collection =>
+                         Detail.where(element_id:5).map{|u| [u.descripcion, u.id]}
+                f.input :intm04, :label => 'Aleacion', :as => :select, :collection =>
+                         Detail.where(element_id:6).map{|u| [u.descripcion, u.id]}
+
+                f.input :floam04, :label => 'Peso(kg)', :input_html => { :style =>  'width:30%'}
                 
                 f.input :admin_user_id, :input_html => 
                          { :value => current_admin_user.id }, :as => :hidden
@@ -83,9 +101,18 @@ ActiveAdmin.register Movement do
               row "Unidad" do |movim|
                  detnomb.paraele(1,movim.intm02)
               end  
-              row "Pedido Kg" do |movim|
+              row "Cantidad" do |movim|
                  movim.floam02
               end                
+              row "Perfil" do |movim|
+                detnomb.paraele(5,movim.intm03)
+              end  
+              row "Aleacion" do |movim|
+                detnomb.paraele(6,movim.intm04)          
+              end 
+              row "Peso(kg)" do |movim|
+                movim.floam04
+              end 
 
               row "Modificado por" do |movim|
                 AdminUser.where(id:movim.admin_user_id).
