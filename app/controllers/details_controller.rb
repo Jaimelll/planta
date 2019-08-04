@@ -1,9 +1,16 @@
 class DetailsController < InheritedResources::Base
 
-  private
+  def paraele(vid,vord)
+    if Detail.where(element_id:vid, id:vord).count>0 then
 
-    def detail_params
-      params.require(:detail).permit(:codigo)
+       exp =Detail.where(element_id:vid, id:vord).
+          select('descripcion as dd').first.dd
+
+    else
+         exp =   "s/d"
     end
+
+  end
+
 
 end

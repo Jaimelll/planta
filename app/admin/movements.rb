@@ -14,19 +14,19 @@ ActiveAdmin.register Movement do
   
   index :title => "Movimiento"  do
  
-
+    detnomb = DetailsController.new
+    prodnomb = ProductsController.new
 
           column("Material") do |movim|
-            if Product.where(id:movim.intm01).count>0 then
-              Product.where(id:movim.intm01).select('nombre as dd').first.dd
-            end
+           vmat=prodnomb.nomprod(movim.intm01)
+             link_to vmat, admin_header_path(movim.header_id)
           end   
 
-          column("Piezas") do |movim|
-            movim.floam01
+          column("Unidad") do |movim|
+             detnomb.paraele(1,movim.intm02)
           end  
           column("Pedido Kg")do |movim|
-          movim.floam02
+             movim.floam02
           end  
 
             actions
@@ -51,8 +51,9 @@ ActiveAdmin.register Movement do
                          Product.order('nombre').map{|u| [u.nombre, u.id]}
 
 
-                f.input :floam01, :label => 'Piezas', :input_html => { :style =>  'width:30%'}
-                f.input :floam02, :label => 'Pedido Kg', :input_html => { :style =>  'width:30%'}
+                f.input :intm02,:label => 'Unidad de medida', :as => :select, :collection =>
+                         Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
+                f.input :floam02, :label => 'Pedido', :input_html => { :style =>  'width:30%'}
                
                 
                 f.input :admin_user_id, :input_html => 
@@ -63,14 +64,28 @@ ActiveAdmin.register Movement do
   
   
   
-          show :title => ' Producto'  do
+          show :title => ' Movimiento'  do
 
   
             attributes_table do
-  
-              row :intm01
-              row :floam01
-              row :floam01
+
+              detnomb = DetailsController.new
+              prodnomb = ProductsController.new
+          
+              row "Material" do |movim|
+                  
+                   vmat=prodnomb.nomprod(movim.intm01)
+                   link_to vmat, admin_header_movements_path(movim.header_id)
+
+              end   
+
+    
+              row "Unidad" do |movim|
+                 detnomb.paraele(1,movim.intm02)
+              end  
+              row "Pedido Kg" do |movim|
+                 movim.floam02
+              end                
 
               row "Modificado por" do |movim|
                 AdminUser.where(id:movim.admin_user_id).
@@ -86,8 +101,13 @@ ActiveAdmin.register Movement do
           else
             vpara=params[:header_id]
           end
-          link_to "Pedido", admin_header_path(vpara)
-         
+       
+
+          Header.where(id:vpara).each do |encab|
+           li "Fecha  : "+ encab.fecha1.to_s
+           li "O/P    :"+ encab.strih01
+           li "Detalle:"+encab.strih02
+          end
         end  
 
 

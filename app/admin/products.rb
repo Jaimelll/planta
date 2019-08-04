@@ -42,36 +42,26 @@ ActiveAdmin.register Product do
 
    index :title => 'Lista de Productos' do
 
-    def paraele(vid,vord)
-      if Detail.where(element_id:vid, id:vord).count>0 then
+    detnomb = DetailsController.new
 
-         exp =Detail.where(element_id:vid, id:vord).
-            select('descripcion as dd').first.dd
-
-      else
-           exp =   "s/d"
-      end
-
-    end
-
-
+     column("codigo") 
       column("nombre") do |producto|
           link_to "#{producto.nombre} ", admin_product_formulas_path(producto)
       end
-      column("codigo") 
+      
       
       column("descripcion")
       column("unidad") do |producto|
-        paraele(1,producto.unidad)
+        detnomb.paraele(1,producto.unidad)
       end  
       column("activo") do |producto|
-        paraele(2,producto.activo)
+        detnomb.paraele(2,producto.activo)
       end  
       column("seccion") do |producto|
-        paraele(3,producto.seccion)
+        detnomb.paraele(3,producto.seccion)
       end  
       column("familia") do |producto|
-        paraele(4,producto.familia)
+        detnomb.paraele(4,producto.familia)
       end  
 
       column("orden")
@@ -126,11 +116,11 @@ ActiveAdmin.register Product do
       end
     
               attributes_table do
-    
+                row :codigo
                 row ("nombre") do |producto|
                   link_to "#{producto.nombre} ", admin_product_formulas_path(producto)
                 end
-                row :codigo
+               
                 row :nombre
                 row :descripcion
                
