@@ -154,7 +154,7 @@ else
   vbruto=0
 end
 
-kg_cm=Detail.where(element_id:7,orden2:1).select('descripcion as dd').first.dd.to_f
+kg_cm=Detail.where(element_id:7,orden2:1).select('codigo as dd').first.dd.to_f
 #kg_cm=0
 
 if vbruto>0 then
@@ -168,6 +168,7 @@ end
 
 
 mov.floam02
+ 
 if vneto>0 then
   nutocho=mov.floam02/vneto 
 else
@@ -179,7 +180,8 @@ Header.where(id:mov.header_id).each do |enca|
 sheet.add_row [prodnomb.nomprod(mov.intm01), detnomb.paraele(1,mov.intm02),mov.floam02,
                detnomb.paraele(5,mov.intm03),detnomb.paraele(6,mov.intm04),
                 mov.floam04, mov.intm05,mov.intm06, mov.floam05,mov.floam06,
-                vneto, vbruto,vlong.to_i,rend,nutocho],
+                vneto, vbruto,vlong.to_i,
+                rend,nutocho],
 style: [ desc, desc, soles,desc, desc,centra,centra,centra,centra,centra,centra,
         centra,centra,centra,centra,centra]
 
