@@ -119,9 +119,9 @@ end
 
 sheet.add_row []
  
-
-sheet.add_row ["Diámetro de lingote = ",exp],
-style: [ centra, centra]
+ddi=Detail.where(element_id:7,orden2:1).select('descripcion as dd').first.dd
+sheet.add_row [ddi],
+style: [ titu]
 
 
 sheet.add_row []
@@ -193,6 +193,94 @@ end
 end
       
 sheet.column_widths *[ 30, 10,10,20,20,10,10,15,0,10,10,10,10,10,10]
+
+end    
+
+
+when 3
+
+
+wb.add_worksheet(name: "Corte") do |sheet|
+
+if Detail.where(element_id:7, orden2:1).count>0 then
+   exp =Detail.where(element_id:7, orden2:1).select('cantidad as dd').first.dd
+else
+   exp=0
+end
+
+
+sheet.add_row []
+ 
+
+sheet.add_row [nil,"PROGRAMA DE CORTE"],
+style: [nil,titu]
+
+
+sheet.add_row []
+
+ 
+
+
+
+sheet.add_row [ "ALEACION", "DIAMETRO", "LONGITUD CM", "PESO (KG)", 
+              "CANT. PZAS"],
+style: [titu, titu, titu, titu, titu]
+
+Movement.order(:id).each do |mov|
+
+              detnomb = DetailsController.new
+              prodnomb = ProductsController.new
+
+
+if mov.floam04 and mov.intm06 then
+   vneto=mov.floam04*mov.intm06
+else
+   vneto=0
+end
+
+if mov.floam05 and mov.floam06 then
+  vbruto=vneto+mov.floam05+mov.floam06
+else
+  vbruto=0
+end
+
+kg_cm=Detail.where(element_id:7,orden2:1).select('codigo as dd').first.dd.to_f
+#kg_cm=0
+ddi=Detail.where(element_id:7,orden2:1).select('descripcion as dd').first.dd
+
+if vbruto>0 then
+ vlong=vbruto/kg_cm
+ rend=vneto*100/vbruto
+ canto=mov.floam02/vbruto
+else
+ vlong=0
+ rend=0
+ canto=0
+end
+
+
+
+mov.floam02
+ 
+if vneto>0 then
+  nutocho=mov.floam02/vneto 
+else
+  nutocho=0
+end
+
+Header.where(id:mov.header_id).each do |enca| 
+
+sheet.add_row [detnomb.paraele(6,mov.intm04),ddi,vlong.to_i, vbruto,canto.to_i],
+style: [ desc, desc, centra, centra,centra]
+
+end
+
+
+
+
+end
+      
+sheet.column_widths *[ 20, 30,20,20,20,20]
 
 end    
 
