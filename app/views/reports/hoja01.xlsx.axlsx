@@ -222,9 +222,9 @@ sheet.add_row []
 
 
 
-sheet.add_row [ "ALEACION", "DIAMETRO", "LONGITUD CM", "PESO (KG)", 
+sheet.add_row [ "ALEACION", "DIAMETRO","PERFIL", "LONGITUD CM", "PESO (KG)", 
               "CANT. PZAS"],
-style: [titu, titu, titu, titu, titu]
+style: [titu, titu, titu, titu, titu, titu]
 
 Movement.order(:id).each do |mov|
 
@@ -251,11 +251,11 @@ ddi=Detail.where(element_id:7,orden2:1).select('descripcion as dd').first.dd
 if vbruto>0 then
  vlong=vbruto/kg_cm
  rend=vneto*100/vbruto
- canto=mov.floam02/vbruto
+ 
 else
  vlong=0
  rend=0
- canto=0
+ 
 end
 
 
@@ -270,8 +270,9 @@ end
 
 Header.where(id:mov.header_id).each do |enca| 
 
-sheet.add_row [detnomb.paraele(6,mov.intm04),ddi,vlong.to_i, vbruto,canto.to_i],
-style: [ desc, desc, centra, centra,centra]
+sheet.add_row [detnomb.paraele(6,mov.intm04),ddi,detnomb.paraele(5,mov.intm03), vlong.to_i,
+          vbruto,nutocho.to_i],
+style: [ desc, desc,desc, centra, centra,centra]
 
 end
 
@@ -280,7 +281,7 @@ end
 
 end
       
-sheet.column_widths *[ 20, 30,20,20,20,20]
+sheet.column_widths *[ 20, 30,30,20,20,20,20]
 
 end    
 
