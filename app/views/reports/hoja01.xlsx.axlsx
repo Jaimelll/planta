@@ -131,8 +131,10 @@ sheet.add_row []
 
 
 sheet.add_row [ "MATERIAL", "UNIDAD", "CANTIDAD", "PERFIL", "ALEACION",
-              "PESO (KG)", "SALIDAS", "PZASxPRENSADA", "CULOTE", "PUNTAS"],
-style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu]
+              "PESO (KG)", "SALIDAS", "PZASxPRENSADA", "CULOTE", "PUNTAS",
+              "NETO","BRUTO","LONG. TOCHO", "RENDIMIENTO","N TOCHOS"],
+style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu,
+              titu, titu, titu, titu, titu]
 
 Movement.order(:id).each do |mov|
 
@@ -140,24 +142,55 @@ Movement.order(:id).each do |mov|
               prodnomb = ProductsController.new
 
 
+if mov.floam04 and mov.intm06 then
+   vneto=mov.floam04*mov.intm06
+else
+   vneto=0
+end
+
+if mov.floam05 and mov.floam06 then
+  vbruto=vneto+mov.floam05+mov.floam06
+else
+  vbruto=0
+end
+
+kg_cm=Detail.where(element_id:7,orden2:1).select('descripcion as dd').first.dd.to_f
+#kg_cm=0
+
+if vbruto>0 then
+ vlong=vbruto/kg_cm
+ rend=vneto*100/vbruto
+else
+ vlong=0
+ rend=0
+end
 
 
 
+mov.floam02
+if vneto>0 then
+  nutocho=mov.floam02/vneto 
+else
+  nutocho=0
+end
 
 Header.where(id:mov.header_id).each do |enca| 
 
 sheet.add_row [prodnomb.nomprod(mov.intm01), detnomb.paraele(1,mov.intm02),mov.floam02,
                detnomb.paraele(5,mov.intm03),detnomb.paraele(6,mov.intm04),
-                mov.floam04, mov.intm05,mov.intm06, mov.floam05,mov.floam06],
-style: [ desc, desc, soles,desc, desc,centra,centra,centra,centra,centra]
+                mov.floam04, mov.intm05,mov.intm06, mov.floam05,mov.floam06,
+                vneto, vbruto,vlong.to_i,rend,nutocho],
+style: [ desc, desc, soles,desc, desc,centra,centra,centra,centra,centra,centra,
+        centra,centra,centra,centra,centra]
 
 end
 
 
 
 
-end       
-sheet.column_widths *[ 30, 10,10,20,20,10,10,15,0,10,10]
+end
+      
+sheet.column_widths *[ 30, 10,10,20,20,10,10,15,0,10,10,10,10,10,10]
 
 end    
 
