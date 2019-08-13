@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_04_202614) do
+ActiveRecord::Schema.define(version: 2019_08_13_193546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 2019_08_04_202614) do
     t.bigint "admin_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "longitud"
+    t.integer "perfil"
+    t.integer "aleacion"
+    t.float "peso"
+    t.float "salidas"
+    t.float "pzasxprens"
+    t.float "culote"
+    t.float "puntas"
     t.index ["admin_user_id"], name: "index_details_on_admin_user_id"
     t.index ["element_id"], name: "index_details_on_element_id"
   end

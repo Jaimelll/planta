@@ -4,9 +4,9 @@ ActiveAdmin.register Detail do
   
 
     permit_params :codigo,  :descripcion,:cantidad, :orden1, :orden2,
-                 :id_element, :admin_user_id
-
-
+                 :id_element, :admin_user_id,
+                 :longitud, :perfil, :aleacion, :peso,
+                 :salidas, :pzasxprens, :culote, :puntas
     
     filter :codigo
     filter :descripcion
@@ -49,7 +49,18 @@ ActiveAdmin.register Detail do
                   f.input :orden2, :input_html => { :style =>  'width:30%'}
                   f.input :cantidad, :input_html => { :style =>  'width:30%'}
 
+                  f.input :longitud, :label => 'Longitud', :input_html => { :style =>  'width:30%'}
 
+                  f.input :aleacion, :label => 'Aleacion', :as => :select, :collection =>
+                           Detail.where(element_id:6).map{|u| [u.descripcion, u.id]}
+  
+                  f.input :peso, :label => 'Peso(kg)', :input_html => { :style =>  'width:30%'}
+  
+                  f.input :salidas, :label => 'Salidas', :input_html => { :style =>  'width:30%'}             
+                  f.input :pzasxprens, :label => 'Piezas x prensada', :input_html => { :style =>  'width:30%'}
+                  f.input :culote, :label => 'Culote', :input_html => { :style =>  'width:30%'}
+                  f.input :puntas, :label => 'Puntas', :input_html => { :style =>  'width:30%'}
+                  
                  
                   
                   f.input :admin_user_id, :input_html => 
@@ -67,7 +78,9 @@ ActiveAdmin.register Detail do
     
                 nn=Element.where(id:params[:element_id]).
                 select('descripcion as dd').first.dd.capitalize
-               
+
+                detnomb = DetailsController.new
+              
 
               
                 row "Parametro" do |deta|
@@ -78,6 +91,31 @@ ActiveAdmin.register Detail do
                 row :orden1
                 row :orden2
                 row :cantidad
+                row :longitud
+              
+                row "Aleacion" do |deta|
+                  detnomb.paraele(6,deta.aleacion)          
+                end 
+
+                row "Peso(kg)" do |movim|
+                  movim.peso
+                end 
+  
+                row "Salidas" do |movim|
+                  movim.salidas
+                end 
+                row "Piezas x prensada" do |movim|
+                  movim.pzasxprens
+                end 
+                row "Culote" do |movim|
+                  movim.culote
+                end 
+                row "Puntas" do |movim|
+                  movim.puntas
+                end 
+
+
+
 
                 row "Modificado por" do |prod|
                   AdminUser.where(id:prod.admin_user_id).

@@ -24,9 +24,7 @@ ActiveAdmin.register Movement do
              link_to vmat, admin_header_path(movim.header_id)
           end   
 
-          column("Unidad") do |movim|
-             detnomb.paraele(1,movim.intm02)
-          end  
+
           column("Cantidad")do |movim|
              movim.floam02
           end  
@@ -62,11 +60,9 @@ ActiveAdmin.register Movement do
                 f.input :intm01, :label => 'Material', :as => :select, :collection =>
                          Product.order('nombre').map{|u| [u.nombre, u.id]}
 
-
-                f.input :intm02,:label => 'Unidad de medida', :as => :select, :collection =>
-                         Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
-                         
                 f.input :floam02, :label => 'Cantidad', :input_html => { :style =>  'width:30%'}
+
+                
 
                 f.input :floam03, :label => 'Longitud', :input_html => { :style =>  'width:30%'}
                 f.input :intm03, :label => 'Perfil', :as => :select, :collection =>
@@ -103,11 +99,8 @@ ActiveAdmin.register Movement do
                    link_to vmat, admin_header_movements_path(movim.header_id)
 
               end   
+  
 
-    
-              row "Unidad" do |movim|
-                 detnomb.paraele(1,movim.intm02)
-              end  
               row "Cantidad" do |movim|
                  movim.floam02
               end                
