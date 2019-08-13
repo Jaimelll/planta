@@ -73,8 +73,8 @@ sheet.add_row []
 
 
 
-sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL", "UNIDAD", "CANTIDAD"],
-style: [titu, titu, titu, titu, titu, titu]
+sheet.add_row ["FECHA", "O/P", "DETALLE", "MATERIAL",  "CANTIDAD"],
+style: [titu, titu, titu, titu,  titu]
 
 Movement.order(:id).each do |mov|
 
@@ -92,8 +92,8 @@ Movement.order(:id).each do |mov|
 Header.where(id:mov.header_id).each do |enca| 
 
 sheet.add_row [enca.fecha1,enca.strih01,enca.strih02,prodnomb.nomprod(mov.intm01),
-                detnomb.paraele(1,mov.intm02),mov.floam02],
-style: [fechad, centra, desc, desc, desc, soles]
+                mov.floam02],
+style: [fechad, centra, desc, desc, soles]
 
 end
 
@@ -101,7 +101,7 @@ end
 
 
 end       
-sheet.column_widths *[10, 10, 10, 40, 10,10]
+sheet.column_widths *[10, 10, 10, 40, 10]
 
 end    
 
@@ -130,10 +130,10 @@ sheet.add_row []
 
 
 
-sheet.add_row [ "MATERIAL", "UNIDAD", "CANTIDAD", "PERFIL", "ALEACION",
+sheet.add_row [ "MATERIAL", "CANTIDAD", "PERFIL", "ALEACION",
               "PESO (KG)", "SALIDAS", "PZASxPRENSADA", "CULOTE", "PUNTAS",
               "NETO","BRUTO","LONG. TOCHO", "RENDIMIENTO","N TOCHOS"],
-style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu,
+style: [titu, titu, titu,  titu, titu, titu, titu, titu, titu,
               titu, titu, titu, titu, titu]
 
 Movement.order(:id).each do |mov|
@@ -142,14 +142,17 @@ Movement.order(:id).each do |mov|
               prodnomb = ProductsController.new
 
 
-if mov.floam04 and mov.intm06 then
-   vneto=mov.floam04*mov.intm06
+if detnomb.ppeso(5,mov.intm03) and detnomb.ppzaspre(5,mov.intm03) then
+   
+   vneto= detnomb.ppeso(5,mov.intm03)* detnomb.ppzaspre(5,mov.intm03)
 else
    vneto=0
 end
 
-if mov.floam05 and mov.floam06 then
-  vbruto=vneto+mov.floam05+mov.floam06
+
+if detnomb.pculote(5,mov.intm03) and  detnomb.ppuntas(5,mov.intm03) then
+  vbruto=vneto+detnomb.pculote(5,mov.intm03)+ detnomb.ppuntas(5,mov.intm03)
+  
 else
   vbruto=0
 end
@@ -167,7 +170,7 @@ end
 
 
 
-mov.floam02
+
  
 if vneto>0 then
   nutocho=mov.floam02/vneto 
@@ -177,12 +180,17 @@ end
 
 Header.where(id:mov.header_id).each do |enca| 
 
-sheet.add_row [prodnomb.nomprod(mov.intm01), detnomb.paraele(1,mov.intm02),mov.floam02,
-               detnomb.paraele(5,mov.intm03),detnomb.paraele(6,mov.intm04),
-                mov.floam04, mov.intm05,mov.intm06, mov.floam05,mov.floam06,
+sheet.add_row [prodnomb.nomprod(mov.intm01),mov.floam02,
+               detnomb.paraele(5,mov.intm03),
+               detnomb.paleac(5,mov.intm03),
+               detnomb.ppeso(5,mov.intm03),
+               detnomb.ssalida(5,mov.intm03),
+               detnomb.ppzaspre(5,mov.intm03),
+               detnomb.pculote(5,mov.intm03),
+               detnomb.ppuntas(5,mov.intm03),
                 vneto, vbruto,vlong.to_i,
                 rend,nutocho],
-style: [ desc, desc, soles,desc, desc,centra,centra,centra,centra,centra,centra,
+style: [ desc,  soles,desc, desc,centra,centra,centra,centra,centra,centra,
         centra,centra,centra,centra,centra]
 
 end
@@ -192,7 +200,7 @@ end
 
 end
       
-sheet.column_widths *[ 30, 10,10,20,20,10,10,15,0,10,10,10,10,10,10]
+sheet.column_widths *[ 30, 10,20,20,10,10,15,0,10,10,10,10,10,10]
 
 end    
 
@@ -232,14 +240,16 @@ Movement.order(:id).each do |mov|
               prodnomb = ProductsController.new
 
 
-if mov.floam04 and mov.intm06 then
-   vneto=mov.floam04*mov.intm06
+if detnomb.ppeso(5,mov.intm03) and detnomb.ppzaspre(5,mov.intm03) then
+   
+   vneto= detnomb.ppeso(5,mov.intm03)* detnomb.ppzaspre(5,mov.intm03)
 else
    vneto=0
 end
 
-if mov.floam05 and mov.floam06 then
-  vbruto=vneto+mov.floam05+mov.floam06
+if detnomb.pculote(5,mov.intm03) and  detnomb.ppuntas(5,mov.intm03) then
+  vbruto=vneto+detnomb.pculote(5,mov.intm03)+ detnomb.ppuntas(5,mov.intm03)
+  
 else
   vbruto=0
 end
@@ -260,8 +270,6 @@ end
 
 
 
-mov.floam02
- 
 if vneto>0 then
   nutocho=mov.floam02/vneto 
 else
@@ -270,7 +278,14 @@ end
 
 Header.where(id:mov.header_id).each do |enca| 
 
-sheet.add_row [detnomb.paraele(6,mov.intm04),ddi,detnomb.paraele(5,mov.intm03), vlong.to_i,
+
+
+
+
+
+sheet.add_row [ detnomb.paraele(5,mov.intm03),ddi,
+           detnomb.paraele(5,mov.intm03),
+          vlong.to_i, 
           vbruto,nutocho.to_i],
 style: [ desc, desc,desc, centra, centra,centra]
 
