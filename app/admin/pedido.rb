@@ -39,6 +39,10 @@
                    { :style =>  'width:30%'}
           f.input :strih01,:label => 'O/P', :input_html => { :style =>  'width:30%'}   
           f.input :strih02,:label => 'Detalle', :input_html => { :style =>  'width:30%'}  
+          f.input :inth01,:label => 'Movimiento', :input_html => 
+          { :value => 1 }, :as => :hidden    
+
+
           f.input :admin_user_id, :input_html => 
                    { :value => current_admin_user.id }, :as => :hidden    
         end
@@ -47,7 +51,8 @@
 
     show :title => ' Encabezado'  do
      attributes_table do  
-
+      vmmov = HeadersController.new
+      
       row "Fecha  " do |pedid|
        if pedid.fecha1 then
         vfec=pedid.fecha1.strftime("%d-%m-%Y")
@@ -62,7 +67,9 @@
       row "Detalle" do |pedid|
         pedid.strih02
       end
-      
+      row "Movimiento" do |pedid|
+        vmmov.mmov(pedid.inth01)
+      end     
 
         row "Modificado por" do |pedid|
           AdminUser.where(id:pedid.admin_user_id).
