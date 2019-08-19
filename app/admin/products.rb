@@ -28,10 +28,36 @@ ActiveAdmin.register Product do
     
 
 
+    scope :Activos, :default => true do |prod|
+               prod.where(activo:6).order('seccion,familia,descripcion')
+    end
+
+    Detail.where(element_id:3).order('orden1').each do |deta|
+        
+       scope :"#{deta.descripcion}", :default => true do |prod|
+ 
+             prod.where(activo:6,seccion:deta.id)
+
+        end
+     end
+
+
+     scope :SinSeccion, :default => true do |prod|
+      prod.where(activo:6).where("seccion IS NULL")
+    end
+
+
+
+
+   scope :NoActivos, :default => true do |prod|
+     prod.where.not(activo:6).order('seccion,familia,descripcion')
+   end
+
     filter :codigo
     filter :nombre
     filter :descripcion
-    
+    filter :familia, :as => :select, :collection =>
+            Detail.where(element_id:4).map{|u| [u.descripcion, u.id]}
     
 
 

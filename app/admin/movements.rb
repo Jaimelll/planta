@@ -52,7 +52,7 @@ ActiveAdmin.register Movement do
                          :input_html => { :value => params[:header_id]}, :as => :hidden
                
                 f.input :intm01, :label => 'Descripcion', :as => :select, :collection =>
-                         Product.order('nombre').map{|u| [u.nombre, u.id]}
+                         Product.where(familia:9).order('nombre').map{|u| [u.nombre, u.id]}
 
                 f.input :floam02, :label => 'Cantidad', :input_html => { :style =>  'width:30%'}
 
