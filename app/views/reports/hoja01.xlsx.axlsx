@@ -305,7 +305,8 @@ end
 
 wb.add_worksheet(name: "Estado") do |sheet|
 
-
+              prodnomb = ProductsController.new
+              vdesp1=MovementsController.new
 
 sheet.add_row []
  
@@ -319,11 +320,17 @@ sheet.add_row []
 sheet.add_row ["PRODUCTO",  "CANTIDAD"],
 style: [titu, titu]
 
-Movement.order(:id).each do |mov|
+
+
+
+
+# pedidos inth01:1
+Header.where(inth01:1).each do |enca1|
+
+Movement.where(header_id:enca1.id).each do |mov|
 
               
-              prodnomb = ProductsController.new
-              vdesp1=MovementsController.new
+
 
 vaa,vbb=vdesp1.despi1(mov.intm01)
 contt=vaa.length
@@ -344,13 +351,13 @@ style: [  desc, soles]
 
 
 
-end
+end # while
 
 
-end       
+end  # de movement     
 sheet.column_widths *[ 40, 10]
-
-end    
+end    # de header  
+end    # de sheet   
 
 
 

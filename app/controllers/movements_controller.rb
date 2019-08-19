@@ -15,4 +15,12 @@ class MovementsController < InheritedResources::Base
   end #despi1 def
 
 
+
+
+
+
+
+
+
+  
 end
