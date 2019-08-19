@@ -316,38 +316,39 @@ sheet.add_row []
 
 
 
-sheet.add_row ["FECHA", "O/P", "PRODUCTO",  "CANTIDAD"],
-style: [titu, titu, titu,   titu]
+sheet.add_row ["PRODUCTO",  "CANTIDAD"],
+style: [titu, titu]
 
 Movement.order(:id).each do |mov|
 
               
               prodnomb = ProductsController.new
+              vdesp1=MovementsController.new
+
+vaa,vbb=vdesp1.despi1(mov.intm01)
+contt=vaa.length
+while contt>0 
+
+
+
+vproduc=prodnomb.nomprod(vaa[contt-1])
+vcan1=mov.floam02*vbb[contt-1]
+
+contt=contt-1
 
 
 
 
-Formula.where(product_id:mov.intm01).each do |formu| 
+sheet.add_row [vproduc,vcan1],
+style: [  desc, soles]
 
 
-vproduc=prodnomb.nomprod(formu.for1)
-vcan1=mov.floam02*formu.cantidad*formu.factor
-
-
-
-
-Header.where(id:mov.header_id).each do |enca| 
-
-sheet.add_row [enca.fecha1,enca.strih01,vproduc,vcan1],
-style: [fechad, centra,  desc, soles]
-
-end
 
 end
 
 
 end       
-sheet.column_widths *[10, 10, 40, 10]
+sheet.column_widths *[ 40, 10]
 
 end    
 
