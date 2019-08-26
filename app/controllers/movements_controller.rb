@@ -50,7 +50,19 @@ class MovementsController < InheritedResources::Base
     end #despi3 def
 
 
+    def familia(aa,bb)
+      Product.update_all( pedido: 0)
 
+
+     conta=0
+     while aa.length>conta 
+        vant=Product.where(id: aa[conta]).select('pedido as dd').first.dd+bb[conta]
+        Product.where(id: aa[conta]).update_all(pedido:vant)
+      
+       conta=conta+1
+     end
+      
+    end #actualiza pedido con aa y bbb
 
 
 
