@@ -20,7 +20,7 @@ fechad = style.add_style(format_code: "dd/mm/yy", border: Axlsx::STYLE_THIN_BORD
 
 
 centra = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
-                               alignment: { horizontal: :center,vertical: :center })
+                               alignment: { horizontal: :center,vertical: :center },sz: 9)
 
 
 
@@ -308,6 +308,7 @@ wb.add_worksheet(name:secto.descripcion) do |sheet|
              
               
               vprodu=HeadersController.new
+              vnunidad=DetailsController.new
 
 sheet.add_row []
  
@@ -318,8 +319,8 @@ sheet.add_row []
 vprodu.acproduc
 
 
-sheet.add_row ["PRODUCTO",  "CANTIDAD"],
-style: [titu, titu]
+sheet.add_row ["PRODUCTO",  "PROGRAMA", "UNIDAD"],
+style: [titu, titu, titu]
 
 
 
@@ -328,12 +329,12 @@ style: [titu, titu]
 Product.where(activo:6,seccion:secto.id).where('pedido>0 and (familia=8 or familia=9)').each do |produ|
 
 
-sheet.add_row [produ.nombre,produ.pedido],
-style: [  desc, soles]
+sheet.add_row [produ.nombre,produ.pedido,vnunidad.paraele(1,produ.unidad)],
+style: [  desc, soles,centra]
 
 end  # de product  
 
-sheet.column_widths *[ 40, 10]
+sheet.column_widths *[ 40, 12,12]
 
 end    # de sheet   
 
