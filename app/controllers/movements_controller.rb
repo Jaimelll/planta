@@ -45,7 +45,6 @@ class MovementsController < InheritedResources::Base
       aa2=aa2+aa1
       bb2=bb2+bb1  
       end
-
       return  aa2, bb2
     end #despi3 def
 

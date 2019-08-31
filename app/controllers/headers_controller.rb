@@ -25,13 +25,15 @@ class HeadersController < InheritedResources::Base
         
         Movement.where(header_id:enca1.id).each do |mov|
         
-                      
+          vant1=Product.where(id: mov.intm01).select('pedido as dd').first.dd+mov.floam02
+          Product.where(id: mov.intm01).update_all(pedido:vant1)             
         
         
         vaa,vbb=vdesp1.despi3(mov.intm01)
         
         
         contt=vaa.length
+
         while contt>0 
         
         
