@@ -129,17 +129,8 @@ ActiveAdmin.register Product do
     
     
     show do
-      def paraele(vid,vord)
-        if Detail.where(element_id:vid, id:vord).count>0 then
-  
-           exp =Detail.where(element_id:vid, id:vord).
-              select('descripcion as dd').first.dd
-  
-        else
-             exp =   "s/d"
-        end
-  
-      end
+      detnomb = DetailsController.new
+     
     
               attributes_table do
                 row :codigo
@@ -151,16 +142,16 @@ ActiveAdmin.register Product do
                 row :descripcion
                
                 row :unidad do |producto|
-                  paraele(1,producto.unidad)
+                  detnomb.paraele(1,producto.unidad)
                 end
                 row :activo do |producto|
-                  paraele(2,producto.activo)
+                  detnomb.paraele(2,producto.activo)
                 end
                 row :seccion do |producto|
-                  paraele(3,producto.seccion)
+                  detnomb.paraele(3,producto.seccion)
                 end
                 row :familia do |producto|
-                  paraele(4,producto.familia)
+                  detnomb.paraele(4,producto.familia)
                 end                                                
                 row :orden
                 row "Modificado por" do |prod|

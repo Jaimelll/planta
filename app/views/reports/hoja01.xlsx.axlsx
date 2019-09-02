@@ -20,7 +20,7 @@ fechad = style.add_style(format_code: "dd/mm/yy", border: Axlsx::STYLE_THIN_BORD
 
 
 centra = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
-                               alignment: { horizontal: :center,vertical: :center })
+                               alignment: { horizontal: :center,vertical: :center },sz: 9)
 
 
 
@@ -302,80 +302,43 @@ end
 
  when 4
 
-
-wb.add_worksheet(name: "Estado") do |sheet|
+Detail.where(element_id:3).order('orden1').each do |secto| 
+wb.add_worksheet(name:secto.descripcion) do |sheet|
 
              
-              vdesp1=MovementsController.new
+              
+              vprodu=HeadersController.new
+              vnunidad=DetailsController.new
 
 sheet.add_row []
  
 
 sheet.add_row []
 
+##ejecuta el calculo de despiece y lo guarda en producto
+vprodu.acproduc
 
 
-
-
-sheet.add_row ["PRODUCTO",  "CANTIDAD"],
-style: [titu, titu]
-
-
-
-Product.update_all( pedido: 0)
-
-
-# pedidos inth01:1
-Header.where(inth01:1).each do |enca1|
-
-Movement.where(header_id:enca1.id).each do |mov|
-
-              
-
-
-vaa,vbb=vdesp1.despi3(mov.intm01)
-
-
-contt=vaa.length
-while contt>0 
-
-
-
-
-vant=Product.where(id: vaa[contt-1]).select('pedido as dd').first.dd+mov.floam02*vbb[contt-1]
- Product.where(id: vaa[contt-1]).update_all(pedido:vant)
-contt=contt-1
-
-
-#sheet.add_row [vproduc,vcan1],
-#style: [  desc, soles]
+sheet.add_row ["PRODUCTO",  "PROGRAMA", "UNIDAD"],
+style: [titu, titu, titu]
 
 
 
 
 
-end # while
+Product.where(activo:6,seccion:secto.id).where('pedido>0 and (familia=8 or familia=9)').each do |produ|
 
 
+sheet.add_row [produ.nombre,produ.pedido,vnunidad.paraele(1,produ.unidad)],
+style: [  desc, soles,centra]
 
-end  # de movement     
-sheet.column_widths *[ 40, 10]
-end    # de header 
+end  # de product  
 
-Product.where('pedido>0').each do |produ|
-
-
-sheet.add_row [produ.nombre,produ.pedido],
-style: [  desc, soles]
-
-end
-
-
-
+sheet.column_widths *[ 40, 12,12]
 
 end    # de sheet   
 
-
+end    # de secto   
 
 
 end # fin de case opc
