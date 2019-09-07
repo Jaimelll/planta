@@ -15,34 +15,17 @@ ActiveAdmin.register Formula do
     
     
     index :title => "Formulación"  do
-      def paraele(vid,vord)
-        if Detail.where(element_id:vid, id:vord).count>0 then
-  
-           exp =Detail.where(element_id:vid, id:vord).
-              select('descripcion as dd').first.dd
-  
-        else
-             exp =   "s/d"
-        end
-  
-      end
+     
+      prodnomb = ProductsController.new
 
-            column("Producto")do |mat|
-               Product.where(id:mat.product_id).select('nombre as dd').first.dd
-            end  
             column("codigo")
-            column("Material") do |producto|
-              if Product.where(id:producto.for1).count>0 then
-                Product.where(id:producto.for1).select('nombre as dd').first.dd
-              end
+            column("Material") do |formu|
+              vmat=prodnomb.nomprod(formu.for1)
+       
             end               
             column("cantidad")
             column("factor")
-            column("unidad") do |mat|
-              paraele(1,mat.unidad)
-            end  
-            column("seccion")
-            column("pedido")
+ 
             column("obs")
               actions
           end
@@ -53,7 +36,7 @@ ActiveAdmin.register Formula do
     
     
               form do |f|
-    
+                prodnomb = ProductsController.new
     
                    nn=Product.where(id:params[:product_id]).
                             select('nombre as dd').first.dd.capitalize
@@ -61,15 +44,13 @@ ActiveAdmin.register Formula do
                   f.input :product_id, :label => 'Producto' ,
                            :input_html => { :value => params[:product_id]}, :as => :hidden
                   f.input :for1, :label => 'Material', :as => :select, :collection =>
-                           Product.order('nombre').map{|u| [u.nombre, u.id]}
+                           Product.order('nombre').map{|u| [prodnomb.nomprod(u.id), u.id]}
 
 
                   f.input :codigo, :input_html => { :style =>  'width:30%'}
                   f.input :cantidad, :input_html => { :style =>  'width:30%'}
                   f.input :factor, :input_html => { :style =>  'width:30%'}
-                  f.input :unidad,:label => 'Unidad de medida', :as => :select, :collection =>
-                             Detail.where(element_id:1).map{|u| [u.descripcion, u.id]}
-                  f.input :seccion, :input_html => { :style =>  'width:30%'}
+   
                   f.input :obs, :input_html => { :style =>  'width:30%'}
                   
                  
@@ -82,47 +63,25 @@ ActiveAdmin.register Formula do
     
     
     
-            show :title => ' Producto'  do
-              def paraele(vid,vord)
-                if Detail.where(element_id:vid, id:vord).count>0 then
-          
-                   exp =Detail.where(element_id:vid, id:vord).
-                      select('descripcion as dd').first.dd
-          
-                else
-                     exp =   "s/d"
-                end
-          
-              end    
+            show :title => ' Formulación'  do
+              prodnomb = ProductsController.new
+
+             
     
               attributes_table do
     
-                nn=Product.where(id:params[:product_id]).
-                         select('nombre as dd').first.dd.capitalize
-    
-               
 
-              
-                row "Producto" do |mat|
-                  link_to "#{nn}", admin_product_formulas_path(mat.product_id)
-                end 
                 row :codigo
-                row "Material" do |producto|
-                  if Product.where(id:producto.for1).count >0 then
-                    Product.where(id:producto.for1).select('nombre as dd').first.dd
-                  end
+                row "Material" do |formu|
+                  vmat=prodnomb.nomprod(formu.for1)
                 end                
                 row :cantidad
                 row :factor
-                row :unidad do |producto|
-                  paraele(1,producto.unidad)
-                end
-                row :seccion
-                row :acti
+  
                 row :obs
              #   row :pedido
-                row "Modificado por" do |prod|
-                  AdminUser.where(id:prod.admin_user_id).
+                row "Modificado por" do |formu|
+                  AdminUser.where(id:formu.admin_user_id).
                   select('email as dd').first.dd
                 end 
               end

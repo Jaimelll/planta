@@ -116,6 +116,8 @@ ActiveAdmin.register Product do
             Detail.where(element_id:4).map{|u| [u.descripcion, u.id]}
 
             f.input :orden
+            f.input :pedido, :input_html =>  { :value => 0 }, :as => :hidden
+           
             f.input :admin_user_id, :input_html => 
                     { :value => current_admin_user.id }, :as => :hidden
 

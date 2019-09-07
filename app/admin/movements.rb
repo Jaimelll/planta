@@ -14,7 +14,7 @@ ActiveAdmin.register Movement do
    filter :floam02, label:'Cantidad'
   
   
-  index :title => "Movimiento"  do
+  index :title => "Lista de Movimientos"  do
  
     detnomb = DetailsController.new
     prodnomb = ProductsController.new
