@@ -17,7 +17,7 @@ class HeadersController < InheritedResources::Base
       def acproduc()
         vdesp1=MovementsController.new
 
-        Product.where.not(pedido:0).update_all(pedido:0)
+        Product.update_all(pedido:0)
 
 
         # pedidos inth01:1

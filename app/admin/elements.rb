@@ -78,8 +78,7 @@ attributes_table do
   row ("nombre") do |producto|
     link_to "#{producto.nombre} ", admin_element_details_path(element)
   end
-  
-  row :nombre
+
   row :descripcion
   row :orden1
   row :orden2

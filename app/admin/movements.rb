@@ -28,10 +28,14 @@ ActiveAdmin.register Movement do
           column("Cantidad")do |movim|
              movim.floam02
           end  
+          column("Perfil") do |movim|
+            detnomb.paraele(5, movim.intm03)
+            
+          end      
           column("Observaciones") do |movim|
             movim.strim01
           end  
-         
+    
 
             actions
         end
@@ -43,19 +47,24 @@ ActiveAdmin.register Movement do
   
             form do |f|
   
-  
+              prodnomb = ProductsController.new
+              detnomb = DetailsController.new
                  nn=Header.where(id:params[:header_id]).
                           select('strih01 as dd').first.dd
 
-                f.inputs "#{nn}" do
+                f.inputs "PEDIDO Nª "+"#{nn}" do
                 f.input :header_id, :label => 'Pedido' ,
                          :input_html => { :value => params[:header_id]}, :as => :hidden
                
                 f.input :intm01, :label => 'Descripcion', :as => :select, :collection =>
-                         Product.where(familia:9).order('nombre').map{|u| [u.nombre, u.id]}
+                         Product.where(familia:9).order('nombre').
+                          map{|u| [prodnomb.nomprod(u.id), u.id]}
 
                 f.input :floam02, :label => 'Cantidad', :input_html => { :style =>  'width:30%'}
-
+              
+                f.input :intm03, :label => 'Perfil', :as => :select, :collection =>
+                            Detail.where(element_id:5).order('descripcion').
+                             map{|u| [ detnomb.paraele(5, u.id), u.id]}
                 
 
                 f.input :strim01, :label => 'Observaciones', :input_html => { :style =>  'width:30%'}
@@ -73,8 +82,9 @@ ActiveAdmin.register Movement do
   
             attributes_table do
 
-              
+              detnomb = DetailsController.new
               prodnomb = ProductsController.new
+             
           
               row "Material" do |movim|
                   
@@ -86,10 +96,15 @@ ActiveAdmin.register Movement do
 
               row "Cantidad" do |movim|
                  movim.floam02
-              end                
+              end      
+              row "Perfil" do |movim|
+                detnomb.paraele(5, movim.intm03)
+                
+              end          
               row "Observaciones" do |movim|
                 movim.strim01
               end  
+
               
               row "Modificado por" do |movim|
                 AdminUser.where(id:movim.admin_user_id).
